@@ -1,0 +1,38 @@
+---
+import { projects } from '@/data/projects';
+import ProjectCard from '@/components/ui/ProjectCard.astro';
+
+const featuredProject = projects.find((p) => p.featured);
+const otherProjects = projects.filter((p) => !p.featured);
+---
+
+<section id="projects" class="py-20 md:py-32 bg-gradient-to-b from-[var(--color-bg-soft)] to-[var(--color-bg-primary)]">
+  <div class="container mx-auto px-6">
+    <div class="max-w-6xl mx-auto">
+      <!-- Section Header -->
+      <div class="text-center mb-16 scroll-reveal">
+        <h2 class="text-3xl md:text-4xl font-bold text-[var(--color-text-heading)] mb-4">
+          Featured Projects
+        </h2>
+        <div class="w-20 h-1 bg-gradient-to-r from-[var(--color-accent-light)] to-[var(--color-accent-dark)] mx-auto rounded-full mb-6"></div>
+        <p class="text-lg text-[var(--color-text-muted)] max-w-2xl mx-auto">
+          A selection of projects that showcase my skills and passion for building great software.
+        </p>
+      </div>
+
+      <!-- Projects Grid -->
+      <div class="grid md:grid-cols-2 gap-8">
+        {featuredProject && (
+          <div class="scroll-reveal stagger-1">
+            <ProjectCard project={featuredProject} featured={true} />
+          </div>
+        )}
+        {otherProjects.map((project, index) => (
+          <div class={`scroll-reveal stagger-${(index % 4) + 2}`}>
+            <ProjectCard project={project} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

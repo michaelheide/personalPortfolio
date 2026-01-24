@@ -1,0 +1,100 @@
+---
+import { siteConfig } from '@/data/site';
+import SocialLink from '@/components/ui/SocialLink.astro';
+import GradientBlob from '@/components/ui/GradientBlob.astro';
+---
+
+<section id="contact" class="py-20 md:py-32 relative overflow-hidden">
+  <!-- Background Blobs -->
+  <GradientBlob size="lg" position="-bottom-32 -right-32" delay={0} />
+  <GradientBlob size="md" position="top-20 -left-20" delay={2} />
+
+  <div class="container mx-auto px-6 relative z-10">
+    <div class="max-w-3xl mx-auto">
+      <!-- Section Header -->
+      <div class="text-center mb-12 scroll-reveal">
+        <h2 class="text-3xl md:text-4xl font-bold text-[var(--color-text-heading)] mb-4">
+          Let's Connect
+        </h2>
+        <div class="w-20 h-1 bg-gradient-to-r from-[var(--color-accent-light)] to-[var(--color-accent-dark)] mx-auto rounded-full mb-6"></div>
+        <p class="text-lg text-[var(--color-text-muted)]">
+          Have a project in mind or just want to chat? I'd love to hear from you.
+        </p>
+      </div>
+
+      <!-- Contact Card -->
+      <div class="scroll-reveal stagger-1 card-soft p-8 md:p-12 text-center">
+        <!-- Email -->
+        <div class="mb-8">
+          <p class="text-sm text-[var(--color-text-muted)] uppercase tracking-wider mb-2">
+            Email me at
+          </p>
+          <a
+            href={`mailto:${siteConfig.email}`}
+            id="email-link"
+            class="text-2xl md:text-3xl font-semibold text-[var(--color-text-heading)] hover:text-[var(--color-accent-dark)] transition-colors"
+          >
+            {siteConfig.email}
+          </a>
+          <button
+            id="copy-email"
+            class="ml-3 inline-flex items-center justify-center w-10 h-10 rounded-lg bg-[var(--color-highlight-light)] text-[var(--color-text-body)] hover:text-[var(--color-accent-dark)] hover:bg-[var(--color-highlight-medium)] transition-all"
+            aria-label="Copy email to clipboard"
+          >
+            <svg id="copy-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+            </svg>
+            <svg id="check-icon" class="w-5 h-5 hidden text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Divider -->
+        <div class="flex items-center gap-4 mb-8">
+          <div class="flex-1 h-px bg-[var(--color-highlight-medium)]"></div>
+          <span class="text-sm text-[var(--color-text-muted)]">or find me on</span>
+          <div class="flex-1 h-px bg-[var(--color-highlight-medium)]"></div>
+        </div>
+
+        <!-- Social Links -->
+        <div class="flex items-center justify-center gap-4 mb-8">
+          {siteConfig.socials.map((social) => (
+            <SocialLink name={social.name} url={social.url} icon={social.icon} size="lg" />
+          ))}
+        </div>
+
+        <!-- Location -->
+        <div class="text-[var(--color-text-muted)] text-sm">
+          <svg class="w-4 h-4 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+          {siteConfig.location} · {siteConfig.timezone}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const copyButton = document.getElementById('copy-email');
+  const copyIcon = document.getElementById('copy-icon');
+  const checkIcon = document.getElementById('check-icon');
+  const email = 'hello@michaelheide.dev';
+
+  copyButton?.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(email);
+      copyIcon?.classList.add('hidden');
+      checkIcon?.classList.remove('hidden');
+
+      setTimeout(() => {
+        copyIcon?.classList.remove('hidden');
+        checkIcon?.classList.add('hidden');
+      }, 2000);
+    } catch (err) {
+      console.error('Failed to copy email:', err);
+    }
+  });
+</script>

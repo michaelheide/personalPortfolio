@@ -1,0 +1,58 @@
+---
+import { siteConfig } from '@/data/site';
+import Button from '@/components/common/Button.astro';
+import GradientBlob from '@/components/ui/GradientBlob.astro';
+---
+
+<section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 hero-fade">
+  <!-- Background Blobs -->
+  <GradientBlob size="xl" position="top-0 -right-32" delay={0} />
+  <GradientBlob size="lg" position="-bottom-20 -left-20" delay={2} />
+  <GradientBlob size="md" position="top-1/3 left-1/4" delay={4} />
+
+  <div class="container mx-auto px-6 relative z-10">
+    <div class="max-w-4xl mx-auto text-center">
+      <!-- Role Badge -->
+      <div class="animate-fade-in-up mb-6">
+        <span class="inline-flex items-center px-4 py-2 rounded-full bg-[var(--color-highlight-light)] text-[var(--color-text-body)] text-sm font-medium border border-[var(--color-highlight-medium)]">
+          {siteConfig.roles.join(' \u2022 ')}
+        </span>
+      </div>
+
+      <!-- Name -->
+      <h1 class="animate-fade-in-up text-5xl md:text-7xl font-bold text-[var(--color-text-heading)] mb-6" style="animation-delay: 0.1s;">
+        Hi, I'm <span class="gradient-text">{siteConfig.name}</span>
+      </h1>
+
+      <!-- Tagline -->
+      <p class="animate-fade-in-up text-xl md:text-2xl text-[var(--color-text-body)] mb-10 max-w-2xl mx-auto leading-relaxed" style="animation-delay: 0.2s;">
+        I craft elegant digital experiences with modern technologies, turning complex challenges into simple, beautiful solutions.
+      </p>
+
+      <!-- CTA Buttons -->
+      <div class="animate-fade-in-up flex flex-col sm:flex-row items-center justify-center gap-4" style="animation-delay: 0.3s;">
+        <Button href="#projects" variant="primary" size="lg">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+          </svg>
+          View Work
+        </Button>
+        <Button href="#contact" variant="secondary" size="lg">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+          Get in Touch
+        </Button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll Indicator -->
+  <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
+    <a href="#about" aria-label="Scroll to About section" class="text-[var(--color-text-muted)] hover:text-[var(--color-accent-dark)] transition-colors">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+      </svg>
+    </a>
+  </div>
+</section>

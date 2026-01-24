@@ -1,0 +1,99 @@
+---
+import { Image } from 'astro:assets';
+import { siteConfig } from '@/data/site';
+import Button from '@components/common/Button.astro';
+import profilImage from '@/assets/profil.png';
+
+const roleCards = [
+  {
+    title: 'Certified Software Architect',
+    description: 'iSAQB CPSA-FL certified. Designing scalable systems and leading teams of up to 8 developers.',
+    icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />`,
+  },
+  {
+    title: 'Fullstack Developer',
+    description: 'Building high-performance apps for web, mobile, and SmartTV platforms with React & React Native.',
+    icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />`,
+  },
+  {
+    title: 'University Lecturer',
+    description: 'Teaching React, Next.js, and Web Engineering at Hochschule RheinMain. Passionate about sharing knowledge.',
+    icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />`,
+  },
+];
+---
+
+<section id="about" class="py-20 md:py-32 bg-gradient-to-b from-[var(--color-bg-primary)] to-[var(--color-bg-soft)]">
+  <div class="container mx-auto px-6">
+    <div class="max-w-6xl mx-auto">
+      <!-- Section Header -->
+      <div class="text-center mb-16 scroll-reveal">
+        <h2 class="text-3xl md:text-4xl font-bold text-[var(--color-text-heading)] mb-4">
+          About Me
+        </h2>
+        <div class="w-20 h-1 bg-gradient-to-r from-[var(--color-accent-light)] to-[var(--color-accent-dark)] mx-auto rounded-full"></div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <!-- Photo / Avatar -->
+        <div class="scroll-reveal stagger-1">
+          <div class="relative">
+            <!-- Gradient Border -->
+            <div class="absolute -inset-1 bg-gradient-to-r from-[var(--color-accent-light)] via-[var(--color-accent-medium)] to-[var(--color-accent-dark)] rounded-2xl blur-sm opacity-50"></div>
+            <div class="relative aspect-square rounded-2xl overflow-hidden bg-[var(--color-bg-card)] flex items-center justify-center">
+<Image
+                src={profilImage}
+                alt="Michael Heide"
+                class="w-full h-full object-cover"
+                loading="lazy"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Bio & Role Cards -->
+        <div class="space-y-8">
+          <div class="scroll-reveal stagger-2">
+            <p class="text-lg text-[var(--color-text-body)] leading-relaxed">
+              From co-founding a digital agency to teaching web engineering at Hochschule RheinMain,
+              my journey has always been about building meaningful software and sharing knowledge.
+              With over 8 years of experience, I've grown from SEO enthusiast to certified software
+              architect leading cross-functional teams.
+            </p>
+            <p class="text-lg text-[var(--color-text-body)] leading-relaxed mt-4">
+              Today, I specialize in high-performance React applications for resource-constrained
+              devices like SmartTVs and Set-Top-Boxes, working with major media companies like RTL.
+              I'm passionate about accessibility, AI-augmented development, and creating software
+              that makes a real difference—like health tech for diabetes management.
+            </p>
+          </div>
+
+          <!-- Role Cards -->
+          <div class="grid gap-4">
+            {roleCards.map((role, index) => (
+              <div class={`scroll-reveal stagger-${index + 2} card-soft p-4 flex items-start gap-4`}>
+                <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-[var(--color-accent-light)] to-[var(--color-accent-medium)] flex items-center justify-center text-white">
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" set:html={role.icon} />
+                </div>
+                <div>
+                  <h3 class="font-semibold text-[var(--color-text-heading)]">{role.title}</h3>
+                  <p class="text-sm text-[var(--color-text-muted)]">{role.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <!-- CV Download -->
+          <div class="flex justify-center scroll-reveal stagger-5">
+            <Button href="/Michael-Heide_CV.pdf" download variant="secondary" size="lg">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              Download CV
+            </Button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

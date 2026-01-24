@@ -1,0 +1,28 @@
+---
+interface Props {
+  class?: string;
+  size?: 'sm' | 'md' | 'lg' | 'xl';
+  position?: string;
+  delay?: number;
+}
+
+const { class: className = '', size = 'lg', position = '', delay = 0 } = Astro.props;
+
+const sizeClasses = {
+  sm: 'w-48 h-48',
+  md: 'w-72 h-72',
+  lg: 'w-96 h-96',
+  xl: 'w-[500px] h-[500px]',
+};
+
+const delayClasses: Record<number, string> = {
+  0: 'animate-blob',
+  2: 'animate-blob-delay-2',
+  4: 'animate-blob-delay-4',
+};
+---
+
+<div
+  class={`absolute ${sizeClasses[size]} rounded-full bg-gradient-to-br from-[var(--color-accent-light)] via-[var(--color-highlight-light)] to-[var(--color-accent-medium)] opacity-30 blur-3xl ${delayClasses[delay] || 'animate-blob'} ${position} ${className}`}
+  aria-hidden="true"
+/>
