@@ -2,6 +2,7 @@
 import { siteConfig } from '@/data/site';
 import SocialLink from '@/components/ui/SocialLink.astro';
 import GradientBlob from '@/components/ui/GradientBlob.astro';
+import SectionHeader from '@/components/ui/SectionHeader.astro';
 ---
 
 <section id="contact" class="py-20 md:py-32 relative overflow-hidden">
@@ -11,16 +12,10 @@ import GradientBlob from '@/components/ui/GradientBlob.astro';
 
   <div class="container mx-auto px-6 relative z-10">
     <div class="max-w-3xl mx-auto">
-      <!-- Section Header -->
-      <div class="text-center mb-12 scroll-reveal">
-        <h2 class="text-3xl md:text-4xl font-bold text-[var(--color-text-heading)] mb-4">
-          Let's Connect
-        </h2>
-        <div class="w-20 h-1 bg-gradient-to-r from-[var(--color-accent-light)] to-[var(--color-accent-dark)] mx-auto rounded-full mb-6"></div>
-        <p class="text-lg text-[var(--color-text-muted)]">
-          Have a project in mind or just want to chat? I'd love to hear from you.
-        </p>
-      </div>
+      <SectionHeader
+        title="Let's Connect"
+        description="Have a project in mind or just want to chat? I'd love to hear from you."
+      />
 
       <!-- Contact Card -->
       <div class="scroll-reveal stagger-1 card-soft p-8 md:p-12 text-center">
@@ -38,6 +33,7 @@ import GradientBlob from '@/components/ui/GradientBlob.astro';
           </a>
           <button
             id="copy-email"
+            data-email={siteConfig.email}
             class="ml-3 inline-flex items-center justify-center w-10 h-10 rounded-lg bg-[var(--color-highlight-light)] text-[var(--color-text-body)] hover:text-[var(--color-accent-dark)] hover:bg-[var(--color-highlight-medium)] transition-all"
             aria-label="Copy email to clipboard"
           >
@@ -78,10 +74,10 @@ import GradientBlob from '@/components/ui/GradientBlob.astro';
 </section>
 
 <script>
-  const copyButton = document.getElementById('copy-email');
+  const copyButton = document.getElementById('copy-email') as HTMLButtonElement | null;
   const copyIcon = document.getElementById('copy-icon');
   const checkIcon = document.getElementById('check-icon');
-  const email = 'hello@michaelheide.dev';
+  const email = copyButton?.dataset.email ?? '';
 
   copyButton?.addEventListener('click', async () => {
     try {

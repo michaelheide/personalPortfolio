@@ -58,15 +58,17 @@
 
     themeToggle?.addEventListener('click', () => {
       const isCurrentlyLight = document.documentElement.classList.contains('light');
+      const newTheme = isCurrentlyLight ? 'dark' : 'light';
 
-      if (isCurrentlyLight) {
-        // Switch to dark
-        document.documentElement.classList.remove('light');
-        localStorage.setItem('theme', 'dark');
-      } else {
-        // Switch to light
+      if (newTheme === 'light') {
         document.documentElement.classList.add('light');
-        localStorage.setItem('theme', 'light');
+      } else {
+        document.documentElement.classList.remove('light');
+      }
+
+      // Store validated theme value
+      if (newTheme === 'light' || newTheme === 'dark') {
+        localStorage.setItem('theme', newTheme);
       }
 
       updateIcons();

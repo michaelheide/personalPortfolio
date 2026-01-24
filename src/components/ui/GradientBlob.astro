@@ -23,6 +23,25 @@ const delayClasses: Record<number, string> = {
 ---
 
 <div
-  class={`absolute ${sizeClasses[size]} rounded-full bg-gradient-to-br from-[var(--color-accent-light)] via-[var(--color-highlight-light)] to-[var(--color-accent-medium)] opacity-30 blur-3xl ${delayClasses[delay] || 'animate-blob'} ${position} ${className}`}
+  class={`gradient-blob absolute ${sizeClasses[size]} rounded-full bg-gradient-to-br from-[var(--color-accent-light)] via-[var(--color-highlight-light)] to-[var(--color-accent-medium)] opacity-30 blur-3xl ${delayClasses[delay] || 'animate-blob'} ${position} ${className}`}
   aria-hidden="true"
 />
+
+<script>
+  // Pause blob animations when not visible to save resources
+  const blobs = document.querySelectorAll('.gradient-blob');
+
+  if (blobs.length > 0) {
+    const blobObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const blob = entry.target as HTMLElement;
+          blob.style.animationPlayState = entry.isIntersecting ? 'running' : 'paused';
+        });
+      },
+      { rootMargin: '50px' }
+    );
+
+    blobs.forEach((blob) => blobObserver.observe(blob));
+  }
+</script>

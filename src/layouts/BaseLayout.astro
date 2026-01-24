@@ -19,9 +19,12 @@ const { title, description } = Astro.props;
     <script is:inline>
       (function() {
         const stored = localStorage.getItem('theme');
+        // Only accept valid theme values
         if (stored === 'light') {
           document.documentElement.classList.add('light');
-        } else if (!stored && window.matchMedia('(prefers-color-scheme: light)').matches) {
+        } else if (stored === 'dark') {
+          // Explicit dark mode, no action needed
+        } else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
           document.documentElement.classList.add('light');
         }
       })();
@@ -30,8 +33,14 @@ const { title, description } = Astro.props;
     <JsonLd />
   </head>
   <body class="min-h-screen bg-[var(--color-bg-primary)] text-[var(--color-text-body)] antialiased">
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-[var(--color-accent-dark)] focus:text-white focus:rounded-lg focus:outline-none"
+    >
+      Skip to main content
+    </a>
     <Header />
-    <main>
+    <main id="main-content">
       <slot />
     </main>
     <Footer />

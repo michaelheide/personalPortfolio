@@ -1,6 +1,7 @@
 ---
 import { skillCategories } from '@/data/skills';
 import SkillBadge from '@/components/ui/SkillBadge.astro';
+import SectionHeader from '@/components/ui/SectionHeader.astro';
 
 const categoryIcons: Record<string, string> = {
   layout: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />`,
@@ -13,16 +14,10 @@ const categoryIcons: Record<string, string> = {
 <section id="skills" class="py-20 md:py-32">
   <div class="container mx-auto px-6">
     <div class="max-w-6xl mx-auto">
-      <!-- Section Header -->
-      <div class="text-center mb-16 scroll-reveal">
-        <h2 class="text-3xl md:text-4xl font-bold text-[var(--color-text-heading)] mb-4">
-          Skills & Expertise
-        </h2>
-        <div class="w-20 h-1 bg-gradient-to-r from-[var(--color-accent-light)] to-[var(--color-accent-dark)] mx-auto rounded-full mb-6"></div>
-        <p class="text-lg text-[var(--color-text-muted)] max-w-2xl mx-auto">
-          A curated selection of technologies and tools I work with to build modern applications.
-        </p>
-      </div>
+      <SectionHeader
+        title="Skills & Expertise"
+        description="A curated selection of technologies and tools I work with to build modern applications."
+      />
 
       <!-- Skill Categories Grid -->
       <div class="grid md:grid-cols-2 gap-8">
