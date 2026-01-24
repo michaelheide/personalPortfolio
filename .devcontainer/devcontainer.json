@@ -1,0 +1,21 @@
+{
+  "name": "Personal Portfolio",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:22",
+  "postCreateCommand": "npm ci",
+  "forwardPorts": [4321],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "astro-build.astro-vscode",
+        "bradlc.vscode-tailwindcss",
+        "esbenp.prettier-vscode"
+      ],
+      "settings": {
+        "editor.formatOnSave": true,
+        "[astro]": {
+          "editor.defaultFormatter": "astro-build.astro-vscode"
+        }
+      }
+    }
+  }
+}
