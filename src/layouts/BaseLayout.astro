@@ -4,17 +4,29 @@ import BaseHead from '@/components/seo/BaseHead.astro';
 import JsonLd from '@/components/seo/JsonLd.astro';
 import Header from '@/components/layout/Header.astro';
 import Footer from '@/components/layout/Footer.astro';
+import { defaultLang, type Lang } from '@i18n/ui';
+import { useTranslations, getHomeUrl } from '@i18n/utils';
+import { getSiteConfig } from '@i18n/translations';
 
 interface Props {
   title?: string;
   description?: string;
+  lang?: Lang;
 }
 
-const { title, description } = Astro.props;
+const { title, description, lang = defaultLang } = Astro.props;
+const t = useTranslations(lang);
+const siteConfig = getSiteConfig(lang);
+
+// Generate hreflang URLs
+const currentPath = Astro.url.pathname;
+const basePath = currentPath.replace(/^\/(de\/)?/, '/');
+const enUrl = new URL(basePath, siteConfig.url);
+const deUrl = new URL(`/de${basePath === '/' ? '/' : basePath}`, siteConfig.url);
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
   <head>
     <script is:inline>
       (function() {
@@ -29,21 +41,25 @@ const { title, description } = Astro.props;
         }
       })();
     </script>
-    <BaseHead title={title} description={description} />
-    <JsonLd />
+    <BaseHead title={title} description={description} lang={lang} />
+    <JsonLd lang={lang} />
+    <!-- hreflang tags for SEO -->
+    <link rel="alternate" hreflang="en" href={enUrl} />
+    <link rel="alternate" hreflang="de" href={deUrl} />
+    <link rel="alternate" hreflang="x-default" href={enUrl} />
   </head>
   <body class="min-h-screen bg-[var(--color-bg-primary)] text-[var(--color-text-body)] antialiased">
     <a
       href="#main-content"
       class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-[var(--color-accent-dark)] focus:text-white focus:rounded-lg focus:outline-none"
     >
-      Skip to main content
+      {t('nav.skipToContent')}
     </a>
-    <Header />
+    <Header lang={lang} />
     <main id="main-content">
       <slot />
     </main>
-    <Footer />
+    <Footer lang={lang} />
 
     <script>
       // Scroll reveal animation

@@ -1,17 +1,19 @@
 ---
-import { siteConfig } from '@/data/site';
+import { defaultLang, type Lang } from '@i18n/ui';
+import { getSiteConfig } from '@i18n/translations';
 
 interface Props {
   title?: string;
   description?: string;
   image?: string;
+  lang?: Lang;
 }
 
-const {
-  title = siteConfig.title,
-  description = siteConfig.description,
-  image = '/og-image.png',
-} = Astro.props;
+const { lang = defaultLang, image = '/og-image.png' } = Astro.props;
+const siteConfig = getSiteConfig(lang);
+
+const title = Astro.props.title || siteConfig.title;
+const description = Astro.props.description || siteConfig.description;
 
 const canonicalURL = new URL(Astro.url.pathname, siteConfig.url);
 ---
@@ -38,6 +40,7 @@ const canonicalURL = new URL(Astro.url.pathname, siteConfig.url);
 <meta property="og:description" content={description} />
 <meta property="og:image" content={new URL(image, siteConfig.url)} />
 <meta property="og:site_name" content={siteConfig.name} />
+<meta property="og:locale" content={lang === 'de' ? 'de_DE' : 'en_US'} />
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image" />

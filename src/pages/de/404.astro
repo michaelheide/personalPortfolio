@@ -1,9 +1,10 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { useTranslations } from '@i18n/utils';
+import { useTranslations, getHomeUrl } from '@i18n/utils';
 
-const lang = 'en';
+const lang = 'de';
 const t = useTranslations(lang);
+const homeUrl = getHomeUrl(lang);
 ---
 
 <BaseLayout title={t('404.title')} description={t('404.description')} lang={lang}>
@@ -16,7 +17,7 @@ const t = useTranslations(lang);
       <p class="text-lg text-[var(--color-text-muted)] mb-8 max-w-md mx-auto">
         {t('404.description')}
       </p>
-      <a href="/" class="btn-primary">
+      <a href={homeUrl} class="btn-primary">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
         </svg>

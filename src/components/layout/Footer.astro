@@ -1,6 +1,17 @@
 ---
-import { siteConfig } from '@/data/site';
+import { defaultLang, type Lang } from '@i18n/ui';
+import { useTranslations, getHomeUrl } from '@i18n/utils';
+import { getSiteConfig } from '@i18n/translations';
 import SocialLink from '@/components/ui/SocialLink.astro';
+
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = defaultLang } = Astro.props;
+const t = useTranslations(lang);
+const siteConfig = getSiteConfig(lang);
+const homeUrl = getHomeUrl(lang);
 ---
 
 <footer class="py-12 border-t border-[var(--color-highlight-medium)]">
@@ -9,13 +20,13 @@ import SocialLink from '@/components/ui/SocialLink.astro';
       <!-- Logo & Copyright -->
       <div class="text-center md:text-left">
         <a
-          href="/"
+          href={homeUrl}
           class="text-xl font-bold text-[var(--color-text-heading)] hover:text-[var(--color-accent-dark)] transition-colors"
         >
           {siteConfig.name.split(' ')[0]}<span class="text-[var(--color-accent-medium)]">.</span>
         </a>
         <p class="text-sm text-[var(--color-text-muted)] mt-2">
-          &copy; {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
+          &copy; {new Date().getFullYear()} {siteConfig.name}. {t('footer.allRightsReserved')}
         </p>
       </div>
 

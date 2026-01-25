@@ -1,12 +1,24 @@
 ---
-import { siteConfig } from '@/data/site';
+import { defaultLang, type Lang } from '@i18n/ui';
+import { useTranslations, getHomeUrl } from '@i18n/utils';
+import { getSiteConfig } from '@i18n/translations';
 import ThemeToggle from '@/components/ui/ThemeToggle.astro';
+import LanguageSwitcher from '@/components/ui/LanguageSwitcher.astro';
+
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = defaultLang } = Astro.props;
+const t = useTranslations(lang);
+const siteConfig = getSiteConfig(lang);
+const homeUrl = getHomeUrl(lang);
 
 const navLinks = [
-  { label: 'About', href: '#about' },
-  { label: 'Skills', href: '#skills' },
-  { label: 'Projects', href: '#projects' },
-  { label: 'Contact', href: '#contact' },
+  { label: t('nav.about'), href: '#about' },
+  { label: t('nav.skills'), href: '#skills' },
+  { label: t('nav.projects'), href: '#projects' },
+  { label: t('nav.contact'), href: '#contact' },
 ];
 ---
 
@@ -18,7 +30,7 @@ const navLinks = [
     <div class="glass rounded-2xl px-6 py-3 flex items-center justify-between">
       <!-- Logo -->
       <a
-        href="/"
+        href={homeUrl}
         class="text-xl font-bold text-[var(--color-text-heading)] hover:text-[var(--color-accent-dark)] transition-colors"
       >
         {siteConfig.name.split(' ')[0]}<span class="text-[var(--color-accent-medium)]">.</span>
@@ -40,19 +52,21 @@ const navLinks = [
         }
       </ul>
 
-      <!-- CTA Button and Theme Toggle -->
-      <div class="hidden md:flex items-center gap-3">
+      <!-- CTA Button, Language Switcher and Theme Toggle -->
+      <div class="hidden md:flex items-center gap-2">
+        <LanguageSwitcher lang={lang} />
         <ThemeToggle />
         <a
           href="#contact"
           class="btn-primary text-sm"
         >
-          Get in Touch
+          {t('nav.getInTouch')}
         </a>
       </div>
 
       <!-- Mobile Menu Button and Theme Toggle -->
       <div class="md:hidden flex items-center gap-2">
+        <LanguageSwitcher lang={lang} />
         <ThemeToggle />
         <button
           id="mobile-menu-btn"
@@ -105,7 +119,7 @@ const navLinks = [
         }
         <li>
           <a href="#contact" class="btn-primary text-sm w-full justify-center">
-            Get in Touch
+            {t('nav.getInTouch')}
           </a>
         </li>
       </ul>

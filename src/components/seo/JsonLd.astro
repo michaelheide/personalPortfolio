@@ -1,5 +1,33 @@
 ---
-import { siteConfig } from '@/data/site';
+import { defaultLang, type Lang } from '@i18n/ui';
+import { getSiteConfig } from '@i18n/translations';
+
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = defaultLang } = Astro.props;
+const siteConfig = getSiteConfig(lang);
+
+const knowsAboutEn = [
+  'Web Development',
+  'Software Architecture',
+  'AI Engineering',
+  'Cloud Computing',
+  'TypeScript',
+  'React',
+  'Node.js',
+];
+
+const knowsAboutDe = [
+  'Webentwicklung',
+  'Software-Architektur',
+  'KI-Engineering',
+  'Cloud Computing',
+  'TypeScript',
+  'React',
+  'Node.js',
+];
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -9,15 +37,7 @@ const jsonLd = {
   email: siteConfig.email,
   jobTitle: siteConfig.roles.join(', '),
   sameAs: siteConfig.socials.map((s) => s.url),
-  knowsAbout: [
-    'Web Development',
-    'Software Architecture',
-    'AI Engineering',
-    'Cloud Computing',
-    'TypeScript',
-    'React',
-    'Node.js',
-  ],
+  knowsAbout: lang === 'de' ? knowsAboutDe : knowsAboutEn,
 };
 ---
 
