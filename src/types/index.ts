@@ -27,6 +27,19 @@ export interface SocialLink {
   icon: string;
 }
 
+export interface Address {
+  streetAddress?: string;
+  addressLocality: string;
+  addressRegion: string;
+  postalCode: string;
+  addressCountry: string;
+}
+
+export interface GeoCoordinates {
+  latitude: string;
+  longitude: string;
+}
+
 export interface SiteConfig {
   name: string;
   title: string;
@@ -37,4 +50,9 @@ export interface SiteConfig {
   timezone: string;
   roles: string[];
   socials: SocialLink[];
+  twitterHandle?: string;
+  ogImage?: string;
+  address?: Address;
+  geo?: GeoCoordinates;
+  serviceArea?: string;
 }

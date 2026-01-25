@@ -9,11 +9,13 @@ interface Props {
   lang?: Lang;
 }
 
-const { lang = defaultLang, image = '/og-image.png' } = Astro.props;
+const { lang = defaultLang } = Astro.props;
 const siteConfig = getSiteConfig(lang);
 
 const title = Astro.props.title || siteConfig.title;
 const description = Astro.props.description || siteConfig.description;
+const image = Astro.props.image || siteConfig.ogImage || '/og-image.png';
+const imageUrl = new URL(image, siteConfig.url);
 
 const canonicalURL = new URL(Astro.url.pathname, siteConfig.url);
 ---
@@ -38,16 +40,33 @@ const canonicalURL = new URL(Astro.url.pathname, siteConfig.url);
 <meta property="og:url" content={canonicalURL} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
-<meta property="og:image" content={new URL(image, siteConfig.url)} />
+<meta property="og:image" content={imageUrl} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:type" content="image/png" />
 <meta property="og:site_name" content={siteConfig.name} />
 <meta property="og:locale" content={lang === 'de' ? 'de_DE' : 'en_US'} />
 
 <!-- Twitter -->
-<meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content={canonicalURL} />
-<meta property="twitter:title" content={title} />
-<meta property="twitter:description" content={description} />
-<meta property="twitter:image" content={new URL(image, siteConfig.url)} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content={canonicalURL} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={imageUrl} />
+{siteConfig.twitterHandle && (
+  <meta name="twitter:site" content={siteConfig.twitterHandle} />
+  <meta name="twitter:creator" content={siteConfig.twitterHandle} />
+)}
 
 <!-- Theme Color -->
 <meta name="theme-color" content="#ffffff" />
+
+<!-- Geo Meta Tags for Local SEO -->
+{siteConfig.geo && (
+  <>
+    <meta name="geo.region" content="DE-HE" />
+    <meta name="geo.placename" content={`${siteConfig.address?.addressLocality || 'Kelsterbach'}, ${siteConfig.serviceArea || 'Rhein Main Area'}`} />
+    <meta name="geo.position" content={`${siteConfig.geo.latitude};${siteConfig.geo.longitude}`} />
+    <meta name="ICBM" content={`${siteConfig.geo.latitude}, ${siteConfig.geo.longitude}`} />
+  </>
+)}

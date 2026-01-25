@@ -1,0 +1,7 @@
+# robots.txt for michaelheide.dev
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://michaelheide.dev/sitemap-index.xml

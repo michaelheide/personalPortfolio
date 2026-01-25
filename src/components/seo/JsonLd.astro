@@ -29,7 +29,7 @@ const knowsAboutDe = [
   'Node.js',
 ];
 
-const jsonLd = {
+const jsonLd: Record<string, unknown> = {
   '@context': 'https://schema.org',
   '@type': 'Person',
   name: siteConfig.name,
@@ -38,6 +38,47 @@ const jsonLd = {
   jobTitle: siteConfig.roles.join(', '),
   sameAs: siteConfig.socials.map((s) => s.url),
   knowsAbout: lang === 'de' ? knowsAboutDe : knowsAboutEn,
+};
+
+// Add structured address if available
+if (siteConfig.address) {
+  jsonLd.address = {
+    '@type': 'PostalAddress',
+    addressLocality: siteConfig.address.addressLocality,
+    addressRegion: siteConfig.address.addressRegion,
+    postalCode: siteConfig.address.postalCode,
+    addressCountry: siteConfig.address.addressCountry,
+  };
+}
+
+// Add geo coordinates if available
+if (siteConfig.geo) {
+  jsonLd.geo = {
+    '@type': 'GeoCoordinates',
+    latitude: siteConfig.geo.latitude,
+    longitude: siteConfig.geo.longitude,
+  };
+}
+
+// Add service area for local SEO
+if (siteConfig.serviceArea) {
+  jsonLd.areaServed = {
+    '@type': 'Place',
+    name: siteConfig.serviceArea,
+  };
+}
+
+// Add affiliation to Hochschule RheinMain
+jsonLd.affiliation = {
+  '@type': 'CollegeOrUniversity',
+  name: 'Hochschule RheinMain',
+  url: 'https://www.hs-rm.de/',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Wiesbaden',
+    addressRegion: 'Hessen',
+    addressCountry: 'DE',
+  },
 };
 ---
 
