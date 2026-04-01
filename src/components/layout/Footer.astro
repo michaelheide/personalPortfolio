@@ -2,6 +2,7 @@
 import { defaultLang, type Lang } from '@i18n/ui';
 import { useTranslations, getHomeUrl } from '@i18n/utils';
 import { getSiteConfig } from '@i18n/translations';
+import { getBlogOverviewUrl } from '@/lib/blog';
 import SocialLink from '@/components/ui/SocialLink.astro';
 
 interface Props {
@@ -12,6 +13,9 @@ const { lang = defaultLang } = Astro.props;
 const t = useTranslations(lang);
 const siteConfig = getSiteConfig(lang);
 const homeUrl = getHomeUrl(lang);
+const blogUrl = getBlogOverviewUrl(lang);
+const imprintUrl = lang === 'de' ? '/de/impressum' : '/imprint';
+const privacyUrl = lang === 'de' ? '/de/datenschutz' : '/privacy';
 ---
 
 <footer class="py-12 border-t border-[var(--color-highlight-medium)]">
@@ -30,11 +34,34 @@ const homeUrl = getHomeUrl(lang);
         </p>
       </div>
 
-      <!-- Social Links -->
-      <div class="flex items-center gap-4">
-        {siteConfig.socials.map((social) => (
-          <SocialLink name={social.name} url={social.url} icon={social.icon} />
-        ))}
+      <div class="flex flex-col items-center gap-4 md:items-end">
+        <div class="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 md:justify-end">
+          <a
+            href={blogUrl}
+            class="text-sm font-medium text-[var(--color-text-body)] transition-colors hover:text-[var(--color-accent-light)]"
+          >
+            {t('nav.blog')}
+          </a>
+          <a
+            href={imprintUrl}
+            class="text-sm font-medium text-[var(--color-text-body)] transition-colors hover:text-[var(--color-accent-light)]"
+          >
+            {t('footer.imprint')}
+          </a>
+          <a
+            href={privacyUrl}
+            class="text-sm font-medium text-[var(--color-text-body)] transition-colors hover:text-[var(--color-accent-light)]"
+          >
+            {t('footer.privacy')}
+          </a>
+        </div>
+
+        <!-- Social Links -->
+        <div class="flex items-center gap-4">
+          {siteConfig.socials.map((social) => (
+            <SocialLink name={social.name} url={social.url} icon={social.icon} />
+          ))}
+        </div>
       </div>
     </div>
   </div>

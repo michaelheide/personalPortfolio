@@ -10,6 +10,19 @@ export interface Project {
   featured?: boolean;
 }
 
+export interface BlogPostMeta {
+  lang: 'en' | 'de';
+  routeSlug: string;
+  translationKey: string;
+  title: string;
+  description: string;
+  excerpt: string;
+  publishedAt: Date;
+  updatedAt?: Date;
+  tags: string[];
+  draft?: boolean;
+}
+
 export interface Skill {
   name: string;
   icon?: string;

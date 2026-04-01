@@ -1,0 +1,34 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import BlogOverview from '@/components/sections/BlogOverview.astro';
+import { getBlogPosts } from '@/lib/blog';
+import { useTranslations } from '@i18n/utils';
+
+const lang = 'de';
+const t = useTranslations(lang);
+const posts = await getBlogPosts(lang);
+---
+
+<BaseLayout
+  lang={lang}
+  title={t('blog.overviewMetaTitle')}
+  description={t('blog.overviewMetaDescription')}
+>
+  <section class="relative overflow-hidden pt-32 pb-20 md:pt-40 md:pb-24">
+    <div class="container mx-auto px-6">
+      <div class="mx-auto max-w-4xl text-center scroll-reveal revealed">
+        <span class="mb-4 inline-flex rounded-full border border-[var(--color-highlight-medium)] bg-[var(--color-highlight-light)] px-4 py-2 text-sm font-medium text-[var(--color-text-body)]">
+          {t('blog.eyebrow')}
+        </span>
+        <h1 class="text-4xl md:text-6xl font-bold text-[var(--color-text-heading)] mb-6">
+          {t('blog.overviewTitle')}
+        </h1>
+        <p class="text-lg md:text-xl text-[var(--color-text-muted)] leading-relaxed">
+          {t('blog.overviewDescription')}
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <BlogOverview posts={posts} lang={lang} />
+</BaseLayout>

@@ -1,0 +1,70 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getSiteConfig } from '@i18n/translations';
+
+const lang = 'en';
+const siteConfig = getSiteConfig(lang);
+---
+
+<BaseLayout
+  lang={lang}
+  title={`Imprint | ${siteConfig.name}`}
+  description={`Legal notice and provider information for ${siteConfig.name}.`}
+  alternateEnPath="/imprint"
+  alternateDePath="/de/impressum"
+>
+  <section class="pt-32 pb-20 md:pt-40 md:pb-28">
+    <div class="container mx-auto px-6">
+      <div class="mx-auto max-w-4xl">
+        <p class="mb-4 text-sm uppercase tracking-[0.24em] text-[var(--color-accent-light)]">Legal</p>
+        <h1 class="mb-6 text-4xl font-bold text-[var(--color-text-heading)] md:text-6xl">Imprint</h1>
+        <div class="blog-prose">
+          <p>
+            Information according to § 5 TMG and provider identification for this website.
+          </p>
+
+          <h2>Provider</h2>
+          <p>
+            {siteConfig.name}<br />
+            {siteConfig.location}<br />
+            Email: <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
+          </p>
+
+          <h2>Responsible for editorial content</h2>
+          <p>
+            {siteConfig.name}<br />
+            {siteConfig.location}
+          </p>
+
+          <h2>EU dispute resolution</h2>
+          <p>
+            The European Commission provides a platform for online dispute resolution (ODR):
+            <a href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener noreferrer">
+              https://ec.europa.eu/consumers/odr/
+            </a>.
+          </p>
+
+          <h2>Consumer dispute resolution / universal arbitration board</h2>
+          <p>
+            I am neither willing nor obliged to participate in dispute resolution proceedings before a consumer arbitration board.
+          </p>
+
+          <h2>Liability for contents</h2>
+          <p>
+            As a service provider, I am responsible for my own content on these pages under general law. However, according to §§ 8 to 10 TMG, I am not obliged to monitor transmitted or stored third-party information or investigate circumstances indicating illegal activity.
+          </p>
+
+          <h2>Liability for links</h2>
+          <p>
+            This website contains links to external third-party websites whose contents I have no influence over. Therefore, I cannot assume any liability for these external contents. The respective provider or operator is always responsible for the contents of linked pages.
+          </p>
+
+          <h2>Copyright</h2>
+          <p>
+            The content and works created by the site operator on these pages are subject to German copyright law. Duplication, processing, distribution, or any kind of exploitation beyond the limits of copyright law requires the prior written consent of the respective author or creator.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

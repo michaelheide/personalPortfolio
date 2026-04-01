@@ -1,0 +1,91 @@
+---
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getBlogPosts, getLatestBlogPosts, formatBlogDate, getBlogOverviewUrl, getTranslatedBlogPost } from '@/lib/blog';
+import BlogCard from '@/components/ui/BlogCard.astro';
+import { useTranslations } from '@i18n/utils';
+
+export const getStaticPaths = (async () => {
+  const posts = await getBlogPosts('en');
+
+  return posts.map((post) => ({
+    params: { slug: post.data.routeSlug },
+    props: { post },
+  }));
+}) satisfies GetStaticPaths;
+
+const lang = 'en';
+const t = useTranslations(lang);
+const { post } = Astro.props;
+const { Content } = await post.render();
+const relatedPosts = (await getLatestBlogPosts(lang, 3)).filter((entry) => entry.id !== post.id).slice(0, 2);
+const overviewUrl = getBlogOverviewUrl(lang);
+const alternatePost = await getTranslatedBlogPost(post, 'de');
+---
+
+<BaseLayout
+  lang={lang}
+  title={`${post.data.title} | Michael Heide`}
+  description={post.data.description}
+  alternateEnPath={`/blog/${post.data.routeSlug}`}
+  alternateDePath={alternatePost ? `/de/blog/${alternatePost.data.routeSlug}` : undefined}
+>
+  <article class="pt-32 pb-20 md:pt-40 md:pb-28">
+    <div class="container mx-auto px-6">
+      <div class="mx-auto max-w-4xl">
+        <a href={overviewUrl} class="mb-8 inline-flex items-center gap-2 text-sm font-medium text-[var(--color-accent-light)] transition-colors hover:text-[var(--color-accent-medium)]">
+          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+          {t('blog.backToOverview')}
+        </a>
+
+        <header class="mb-12 border-b border-[var(--color-highlight-medium)] pb-10">
+          <div class="mb-6 flex flex-wrap items-center gap-3 text-sm text-[var(--color-text-muted)]">
+            <time datetime={post.data.publishedAt.toISOString()}>{formatBlogDate(post.data.publishedAt, lang)}</time>
+            {post.data.tags.map((tag) => (
+              <span class="rounded-full border border-[var(--color-highlight-medium)] bg-[var(--color-highlight-light)] px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-[var(--color-text-body)]">
+                {tag}
+              </span>
+            ))}
+          </div>
+
+          <h1 class="text-4xl md:text-6xl font-bold text-[var(--color-text-heading)] leading-tight mb-6">
+            {post.data.title}
+          </h1>
+
+          <p class="text-xl text-[var(--color-text-muted)] leading-relaxed">
+            {post.data.description}
+          </p>
+        </header>
+
+        <div class="blog-prose">
+          <Content />
+        </div>
+      </div>
+    </div>
+  </article>
+
+  {relatedPosts.length > 0 && (
+    <section class="pb-20 md:pb-28">
+      <div class="container mx-auto px-6">
+        <div class="mx-auto max-w-6xl">
+          <div class="mb-10 flex items-end justify-between gap-6">
+            <div>
+              <p class="mb-2 text-sm uppercase tracking-[0.24em] text-[var(--color-accent-light)]">{t('blog.keepReading')}</p>
+              <h2 class="text-3xl font-bold text-[var(--color-text-heading)]">{t('blog.relatedPosts')}</h2>
+            </div>
+          </div>
+
+          <div class="grid gap-8 md:grid-cols-2">
+            {relatedPosts.map((relatedPost, index) => (
+              <div class={`scroll-reveal revealed stagger-${index + 1}`}>
+                <BlogCard post={relatedPost} lang={lang} />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+</BaseLayout>

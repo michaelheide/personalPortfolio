@@ -1,0 +1,49 @@
+---
+import { defaultLang, type Lang } from '@i18n/ui';
+import { useTranslations } from '@i18n/utils';
+import { getLatestBlogPosts, getBlogOverviewUrl } from '@/lib/blog';
+import BlogCard from '@/components/ui/BlogCard.astro';
+import SectionHeader from '@/components/ui/SectionHeader.astro';
+
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = defaultLang } = Astro.props;
+const t = useTranslations(lang);
+const posts = await getLatestBlogPosts(lang, 2);
+const blogUrl = getBlogOverviewUrl(lang);
+---
+
+<section id="blog" class="py-20 md:py-32 bg-[var(--color-bg-primary)]">
+  <div class="container mx-auto px-6">
+    <div class="max-w-6xl mx-auto">
+      <SectionHeader
+        title={t('blog.title')}
+        description={t('blog.sectionDescription')}
+      />
+
+      {posts.length > 0 ? (
+        <>
+          <div class="grid gap-8 md:grid-cols-2 items-stretch">
+            {posts.map((post, index) => (
+              <div class={`scroll-reveal stagger-${index + 1}`}>
+                <BlogCard post={post} lang={lang} />
+              </div>
+            ))}
+          </div>
+
+          <div class="scroll-reveal stagger-3 mt-10 flex justify-center">
+            <a href={blogUrl} class="btn-secondary">
+              {t('blog.viewAllPosts')}
+            </a>
+          </div>
+        </>
+      ) : (
+        <div class="card-soft scroll-reveal max-w-3xl mx-auto p-8 text-center">
+          <p class="text-lg text-[var(--color-text-muted)]">{t('blog.noPosts')}</p>
+        </div>
+      )}
+    </div>
+  </div>
+</section>

@@ -13,6 +13,7 @@ export const ui = {
     'nav.about': 'About',
     'nav.skills': 'Skills',
     'nav.projects': 'Projects',
+    'nav.blog': 'Blog',
     'nav.contact': 'Contact',
     'nav.getInTouch': 'Get in Touch',
     'nav.skipToContent': 'Skip to main content',
@@ -57,6 +58,35 @@ export const ui = {
     'projects.liveDemo': 'Live Demo',
     'projects.github': 'GitHub',
 
+    // Blog Section
+    'blog.title': 'Latest Writing',
+    'blog.sectionDescription': 'Thoughts on engineering, architecture, product teams, and building resilient digital experiences.',
+    'blog.eyebrow': 'Field notes',
+    'blog.latestLabel': 'Latest',
+    'blog.readArticle': 'Read article',
+    'blog.viewAllPosts': 'Browse all posts',
+    'blog.overviewTitle': 'Writing on engineering, architecture, and product thinking',
+    'blog.overviewDescription': 'A growing collection of articles about building high-performance interfaces, shaping software systems, and working thoughtfully in modern product teams.',
+    'blog.overviewMetaTitle': 'Blog | Michael Heide',
+    'blog.overviewMetaDescription': 'Read articles by Michael Heide on software architecture, React, performance, teaching, and modern product engineering.',
+    'blog.searchLabel': 'Search articles',
+    'blog.searchPlaceholder': 'Search by title, topic, or keyword',
+    'blog.filterByTag': 'Filter by tag',
+    'blog.allTags': 'All',
+    'blog.showingResults': 'Showing results',
+    'blog.resultSingular': 'result',
+    'blog.resultPlural': 'results',
+    'blog.resetFilters': 'Reset filters',
+    'blog.previousPage': 'Previous',
+    'blog.nextPage': 'Next',
+    'blog.pageLabel': 'Page',
+    'blog.pageOf': 'of',
+    'blog.noSearchResults': 'No posts match your current search or tag filter.',
+    'blog.backToOverview': 'Back to blog overview',
+    'blog.keepReading': 'Keep reading',
+    'blog.relatedPosts': 'More articles',
+    'blog.noPosts': 'Blog posts are coming soon.',
+
     // Contact Section
     'contact.title': "Let's Connect",
     'contact.description':
@@ -67,6 +97,8 @@ export const ui = {
 
     // Footer
     'footer.allRightsReserved': 'All rights reserved.',
+    'footer.imprint': 'Imprint',
+    'footer.privacy': 'Privacy Policy',
 
     // 404 Page
     '404.title': 'Page Not Found',
@@ -78,6 +110,7 @@ export const ui = {
     'nav.about': 'Über mich',
     'nav.skills': 'Skills',
     'nav.projects': 'Projekte',
+    'nav.blog': 'Blog',
     'nav.contact': 'Kontakt',
     'nav.getInTouch': 'Kontakt',
     'nav.skipToContent': 'Zum Hauptinhalt springen',
@@ -122,6 +155,35 @@ export const ui = {
     'projects.liveDemo': 'Live Demo',
     'projects.github': 'GitHub',
 
+    // Blog Section
+    'blog.title': 'Neueste Artikel',
+    'blog.sectionDescription': 'Gedanken zu Engineering, Architektur, Produktteams und dem Bau robuster digitaler Erlebnisse.',
+    'blog.eyebrow': 'Notizen aus der Praxis',
+    'blog.latestLabel': 'Neu',
+    'blog.readArticle': 'Artikel lesen',
+    'blog.viewAllPosts': 'Alle Beiträge ansehen',
+    'blog.overviewTitle': 'Artikel über Engineering, Architektur und Product Thinking',
+    'blog.overviewDescription': 'Eine wachsende Sammlung von Texten über performante Interfaces, tragfähige Softwaresysteme und durchdachte Zusammenarbeit in modernen Produktteams.',
+    'blog.overviewMetaTitle': 'Blog | Michael Heide',
+    'blog.overviewMetaDescription': 'Lies Artikel von Michael Heide über Software-Architektur, React, Performance, Lehre und modernes Product Engineering.',
+    'blog.searchLabel': 'Artikel durchsuchen',
+    'blog.searchPlaceholder': 'Nach Titel, Thema oder Stichwort suchen',
+    'blog.filterByTag': 'Nach Tag filtern',
+    'blog.allTags': 'Alle',
+    'blog.showingResults': 'Ergebnisse',
+    'blog.resultSingular': 'Ergebnis',
+    'blog.resultPlural': 'Ergebnisse',
+    'blog.resetFilters': 'Filter zurücksetzen',
+    'blog.previousPage': 'Zurück',
+    'blog.nextPage': 'Weiter',
+    'blog.pageLabel': 'Seite',
+    'blog.pageOf': 'von',
+    'blog.noSearchResults': 'Keine Beiträge passen zur aktuellen Suche oder Tag-Auswahl.',
+    'blog.backToOverview': 'Zur Blog-Übersicht',
+    'blog.keepReading': 'Weiterlesen',
+    'blog.relatedPosts': 'Weitere Artikel',
+    'blog.noPosts': 'Blogbeiträge folgen in Kürze.',
+
     // Contact Section
     'contact.title': 'Lass uns vernetzen',
     'contact.description':
@@ -132,6 +194,8 @@ export const ui = {
 
     // Footer
     'footer.allRightsReserved': 'Alle Rechte vorbehalten.',
+    'footer.imprint': 'Impressum',
+    'footer.privacy': 'Datenschutz',
 
     // 404 Page
     '404.title': 'Seite nicht gefunden',

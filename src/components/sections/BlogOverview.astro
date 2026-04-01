@@ -1,0 +1,215 @@
+---
+import type { BlogEntry } from '@/lib/blog';
+import { defaultLang, type Lang } from '@i18n/ui';
+import { useTranslations } from '@i18n/utils';
+import BlogCard from '@/components/ui/BlogCard.astro';
+
+interface Props {
+  posts: BlogEntry[];
+  lang?: Lang;
+  pageSize?: number;
+}
+
+const { posts, lang = defaultLang, pageSize = 6 } = Astro.props;
+const t = useTranslations(lang);
+const tags = [...new Set(posts.flatMap((post) => post.data.tags))].sort((a, b) => a.localeCompare(b));
+---
+
+<section class="pb-20 md:pb-28">
+  <div class="container mx-auto px-6">
+    {posts.length > 0 ? (
+      <div
+        class="mx-auto max-w-6xl"
+        data-blog-overview
+        data-page-size={pageSize}
+        data-results-singular={t('blog.resultSingular')}
+        data-results-plural={t('blog.resultPlural')}
+        data-page-label={t('blog.pageLabel')}
+        data-page-of={t('blog.pageOf')}
+      >
+        <div class="card-soft mb-8 p-5 md:p-6">
+          <div class="grid gap-5 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
+            <div>
+              <label for={`blog-search-${lang}`} class="mb-2 block text-sm font-medium text-[var(--color-text-heading)]">
+                {t('blog.searchLabel')}
+              </label>
+              <input
+                id={`blog-search-${lang}`}
+                type="search"
+                placeholder={t('blog.searchPlaceholder')}
+                class="w-full rounded-2xl border border-[var(--color-highlight-medium)] bg-[var(--color-bg-primary)] px-4 py-3 text-[var(--color-text-body)] outline-none transition focus:border-[var(--color-accent-medium)]"
+                data-blog-search
+              />
+            </div>
+
+            <div class="flex flex-wrap items-center gap-3 lg:justify-end">
+              <span class="text-sm font-medium text-[var(--color-text-muted)]">{t('blog.filterByTag')}</span>
+              <button
+                type="button"
+                class="blog-filter-chip is-active"
+                data-blog-tag="all"
+              >
+                {t('blog.allTags')}
+              </button>
+              {tags.map((tag) => (
+                <button
+                  type="button"
+                  class="blog-filter-chip"
+                  data-blog-tag={tag}
+                >
+                  {tag}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-6 flex items-center justify-between gap-4 text-sm text-[var(--color-text-muted)]">
+          <p data-blog-results>{t('blog.showingResults')}</p>
+          <button type="button" class="text-[var(--color-accent-light)] transition-colors hover:text-[var(--color-accent-medium)]" data-blog-reset>
+            {t('blog.resetFilters')}
+          </button>
+        </div>
+
+        <div class="grid gap-8 md:grid-cols-2" data-blog-grid>
+          {posts.map((post, index) => (
+            <div
+              class={`scroll-reveal revealed stagger-${(index % 4) + 1}`}
+              data-blog-item
+              data-title={post.data.title.toLowerCase()}
+              data-description={post.data.description.toLowerCase()}
+              data-excerpt={post.data.excerpt.toLowerCase()}
+              data-tags={post.data.tags.join('|').toLowerCase()}
+            >
+              <BlogCard post={post} lang={lang} featured={index === 0} />
+            </div>
+          ))}
+        </div>
+
+        <div class="hidden card-soft mt-8 p-8 text-center" data-blog-empty>
+          <p class="text-lg text-[var(--color-text-muted)]">{t('blog.noSearchResults')}</p>
+        </div>
+
+        <div class="mt-10 flex flex-col items-center justify-between gap-4 border-t border-[var(--color-highlight-medium)] pt-8 sm:flex-row" data-blog-pagination>
+          <button type="button" class="btn-secondary" data-blog-prev>
+            {t('blog.previousPage')}
+          </button>
+          <p class="text-sm text-[var(--color-text-muted)]" data-blog-page-status></p>
+          <button type="button" class="btn-secondary" data-blog-next>
+            {t('blog.nextPage')}
+          </button>
+        </div>
+      </div>
+    ) : (
+      <div class="card-soft mx-auto max-w-3xl p-8 text-center">
+        <p class="text-lg text-[var(--color-text-muted)]">{t('blog.noPosts')}</p>
+      </div>
+    )}
+  </div>
+</section>
+
+<script>
+  const overview = document.querySelector('[data-blog-overview]');
+
+  if (overview) {
+    const pageSize = Number(overview.getAttribute('data-page-size') || '6');
+    const resultSingular = overview.getAttribute('data-results-singular') || 'result';
+    const resultPlural = overview.getAttribute('data-results-plural') || 'results';
+    const pageLabel = overview.getAttribute('data-page-label') || 'Page';
+    const pageOf = overview.getAttribute('data-page-of') || 'of';
+    const searchInput = overview.querySelector('[data-blog-search]');
+    const tagButtons = [...overview.querySelectorAll('[data-blog-tag]')];
+    const items = [...overview.querySelectorAll('[data-blog-item]')];
+    const emptyState = overview.querySelector('[data-blog-empty]');
+    const resultsLabel = overview.querySelector('[data-blog-results]');
+    const resetButton = overview.querySelector('[data-blog-reset]');
+    const prevButton = overview.querySelector('[data-blog-prev]');
+    const nextButton = overview.querySelector('[data-blog-next]');
+    const pageStatus = overview.querySelector('[data-blog-page-status]');
+    const pagination = overview.querySelector('[data-blog-pagination]');
+
+    let activeTag = 'all';
+    let query = '';
+    let currentPage = 1;
+
+    const getFilteredItems = () => {
+      return items.filter((item) => {
+        const title = item.getAttribute('data-title') || '';
+        const description = item.getAttribute('data-description') || '';
+        const excerpt = item.getAttribute('data-excerpt') || '';
+        const tags = item.getAttribute('data-tags') || '';
+        const matchesQuery = !query || [title, description, excerpt, tags].some((value) => value.includes(query));
+        const matchesTag = activeTag === 'all' || tags.split('|').includes(activeTag);
+        return matchesQuery && matchesTag;
+      });
+    };
+
+    const render = () => {
+      const filteredItems = getFilteredItems();
+      const totalPages = Math.max(1, Math.ceil(filteredItems.length / pageSize));
+      currentPage = Math.min(currentPage, totalPages);
+      const start = (currentPage - 1) * pageSize;
+      const visibleItems = new Set(filteredItems.slice(start, start + pageSize));
+
+      items.forEach((item) => {
+        item.classList.toggle('hidden', !visibleItems.has(item));
+      });
+
+      if (emptyState) {
+        emptyState.classList.toggle('hidden', filteredItems.length > 0);
+      }
+
+      if (resultsLabel) {
+        resultsLabel.textContent = `${filteredItems.length} ${filteredItems.length === 1 ? resultSingular : resultPlural}`;
+      }
+
+      if (pageStatus) {
+        pageStatus.textContent = `${pageLabel} ${currentPage} ${pageOf} ${totalPages}`;
+      }
+
+      if (prevButton) prevButton.toggleAttribute('disabled', currentPage <= 1);
+      if (nextButton) nextButton.toggleAttribute('disabled', currentPage >= totalPages);
+      if (pagination) pagination.classList.toggle('hidden', filteredItems.length <= pageSize && filteredItems.length > 0);
+    };
+
+    searchInput?.addEventListener('input', (event) => {
+      query = event.target.value.trim().toLowerCase();
+      currentPage = 1;
+      render();
+    });
+
+    tagButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        activeTag = button.getAttribute('data-blog-tag') || 'all';
+        currentPage = 1;
+
+        tagButtons.forEach((chip) => chip.classList.remove('is-active'));
+        button.classList.add('is-active');
+        render();
+      });
+    });
+
+    resetButton?.addEventListener('click', () => {
+      activeTag = 'all';
+      query = '';
+      currentPage = 1;
+      if (searchInput) searchInput.value = '';
+      tagButtons.forEach((chip) => chip.classList.toggle('is-active', chip.getAttribute('data-blog-tag') === 'all'));
+      render();
+    });
+
+    prevButton?.addEventListener('click', () => {
+      currentPage = Math.max(1, currentPage - 1);
+      render();
+    });
+
+    nextButton?.addEventListener('click', () => {
+      const filteredItems = getFilteredItems();
+      const totalPages = Math.max(1, Math.ceil(filteredItems.length / pageSize));
+      currentPage = Math.min(totalPages, currentPage + 1);
+      render();
+    });
+
+    render();
+  }
+</script>

@@ -4,9 +4,10 @@ import { getAlternateLanguage } from '@i18n/utils';
 
 interface Props {
   lang: Lang;
+  alternateUrl?: string;
 }
 
-const { lang } = Astro.props;
+const { lang, alternateUrl: alternateUrlProp } = Astro.props;
 const alternateLang = getAlternateLanguage(lang);
 
 // Get current path without lang prefix
@@ -14,9 +15,9 @@ const currentPath = Astro.url.pathname;
 const pathWithoutLang = currentPath.replace(/^\/(de)\//, '/').replace(/^\/(de)$/, '/');
 
 // Build the alternate URL
-const alternateUrl = alternateLang === defaultLang
+const alternateUrl = alternateUrlProp || (alternateLang === defaultLang
   ? pathWithoutLang
-  : `/${alternateLang}${pathWithoutLang === '/' ? '' : pathWithoutLang}`;
+  : `/${alternateLang}${pathWithoutLang === '/' ? '' : pathWithoutLang}`);
 ---
 
 <a

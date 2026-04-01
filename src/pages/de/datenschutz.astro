@@ -1,0 +1,69 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getSiteConfig } from '@i18n/translations';
+
+const lang = 'de';
+const siteConfig = getSiteConfig(lang);
+---
+
+<BaseLayout
+  lang={lang}
+  title={`Datenschutz | ${siteConfig.name}`}
+  description={`Datenschutzerklärung von ${siteConfig.name}.`}
+  alternateEnPath="/privacy"
+  alternateDePath="/de/datenschutz"
+>
+  <section class="pt-32 pb-20 md:pt-40 md:pb-28">
+    <div class="container mx-auto px-6">
+      <div class="mx-auto max-w-4xl">
+        <p class="mb-4 text-sm uppercase tracking-[0.24em] text-[var(--color-accent-light)]">Rechtliches</p>
+        <h1 class="mb-6 text-4xl font-bold text-[var(--color-text-heading)] md:text-6xl">Datenschutzerklärung</h1>
+        <div class="blog-prose">
+          <p>
+            Diese Datenschutzerklärung informiert darüber, welche personenbezogenen Daten beim Besuch dieser Website verarbeitet werden können und zu welchem Zweck dies erfolgt.
+          </p>
+
+          <h2>Verantwortlicher</h2>
+          <p>
+            {siteConfig.name}<br />
+            {siteConfig.location}<br />
+            E-Mail: <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
+          </p>
+
+          <h2>Server-Log-Dateien</h2>
+          <p>
+            Beim Aufruf dieser Website erhebt der Hosting-Provider gegebenenfalls automatisch Informationen in sogenannten Server-Log-Dateien. Dazu können Browsertyp, Betriebssystem, Referrer-URL, IP-Adresse, Uhrzeit der Serveranfrage und ähnliche technische Daten gehören. Die Verarbeitung erfolgt auf Grundlage des berechtigten Interesses an einem sicheren und stabilen Betrieb der Website.
+          </p>
+
+          <h2>Kontaktaufnahme per E-Mail</h2>
+          <p>
+            Wenn du mich per E-Mail kontaktierst, werden die von dir übermittelten Daten zur Bearbeitung deiner Anfrage und für mögliche Anschlussfragen verarbeitet. Die Verarbeitung erfolgt je nach Anliegen auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO oder Art. 6 Abs. 1 lit. f DSGVO.
+          </p>
+
+          <h2>Keine Cookies für Tracking oder Analytics</h2>
+          <p>
+            Diese Website verwendet derzeit keine Analyse- oder Marketing-Cookies. Sollte sich das künftig ändern, wird diese Datenschutzerklärung entsprechend aktualisiert.
+          </p>
+
+          <h2>Local Storage für die Theme-Auswahl</h2>
+          <p>
+            Zur Speicherung deiner bevorzugten Darstellung im hellen oder dunklen Modus nutzt diese Website den Local Storage deines Browsers. Diese Information verbleibt auf deinem Endgerät und wird nicht an mich oder Dritte übermittelt.
+          </p>
+
+          <h2>Externe Links</h2>
+          <p>
+            Diese Website verlinkt auf externe Plattformen wie GitHub, LinkedIn oder andere Websites Dritter. Beim Anklicken dieser Links gelten die Datenschutzbestimmungen der jeweiligen Anbieter.
+          </p>
+
+          <h2>Deine Rechte</h2>
+          <p>
+            Du hast im Rahmen der gesetzlichen Vorgaben das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit sowie Widerspruch gegen die Verarbeitung deiner personenbezogenen Daten. Außerdem steht dir ein Beschwerderecht bei einer zuständigen Aufsichtsbehörde zu.
+          </p>
+
+          <h2>Stand</h2>
+          <p>1. April 2026</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

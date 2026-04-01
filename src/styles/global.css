@@ -229,6 +229,117 @@ section {
   mask-image: linear-gradient(to bottom, black 0%, black 85%, transparent 100%);
 }
 
+/* Blog filters */
+.blog-filter-chip {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9999px;
+  border: 1px solid var(--color-highlight-medium);
+  background: var(--color-bg-primary);
+  color: var(--color-text-body);
+  padding: 0.55rem 0.9rem;
+  font-size: 0.875rem;
+  transition: all 0.25s ease;
+}
+
+.blog-filter-chip:hover,
+.blog-filter-chip.is-active {
+  border-color: var(--color-accent-medium);
+  background: var(--color-highlight-light);
+  color: var(--color-text-heading);
+}
+
+button[disabled] {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Blog prose */
+.blog-prose {
+  color: var(--color-text-body);
+  font-size: 1.0625rem;
+  line-height: 1.9;
+}
+
+.blog-prose > * + * {
+  margin-top: 1.5rem;
+}
+
+.blog-prose h2,
+.blog-prose h3,
+.blog-prose h4 {
+  color: var(--color-text-heading);
+  line-height: 1.2;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+}
+
+.blog-prose h2 {
+  font-size: 2rem;
+}
+
+.blog-prose h3 {
+  font-size: 1.5rem;
+}
+
+.blog-prose p,
+.blog-prose ul,
+.blog-prose ol,
+.blog-prose blockquote {
+  color: var(--color-text-body);
+}
+
+.blog-prose ul,
+.blog-prose ol {
+  padding-left: 1.5rem;
+}
+
+.blog-prose li + li {
+  margin-top: 0.75rem;
+}
+
+.blog-prose li::marker {
+  color: var(--color-accent-medium);
+}
+
+.blog-prose a {
+  color: var(--color-accent-light);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--color-accent-medium) 50%, transparent);
+  text-underline-offset: 0.22em;
+}
+
+.blog-prose strong {
+  color: var(--color-text-heading);
+}
+
+.blog-prose blockquote {
+  border-left: 3px solid var(--color-accent-medium);
+  padding-left: 1rem;
+  color: var(--color-text-muted);
+}
+
+.blog-prose code {
+  background: var(--color-highlight-light);
+  color: var(--color-accent-light);
+  border-radius: 0.5rem;
+  padding: 0.15rem 0.4rem;
+  font-size: 0.95em;
+}
+
+.blog-prose pre {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-highlight-medium);
+  border-radius: 1rem;
+  padding: 1rem 1.25rem;
+  overflow-x: auto;
+}
+
+.blog-prose pre code {
+  background: transparent;
+  padding: 0;
+}
+
 /* Respect reduced motion preferences */
 @media (prefers-reduced-motion: reduce) {
   html {

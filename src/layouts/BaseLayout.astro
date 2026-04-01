@@ -12,17 +12,22 @@ interface Props {
   title?: string;
   description?: string;
   lang?: Lang;
+  alternateEnPath?: string;
+  alternateDePath?: string;
 }
 
-const { title, description, lang = defaultLang } = Astro.props;
+const { title, description, lang = defaultLang, alternateEnPath, alternateDePath } = Astro.props;
 const t = useTranslations(lang);
 const siteConfig = getSiteConfig(lang);
 
 // Generate hreflang URLs
 const currentPath = Astro.url.pathname;
 const basePath = currentPath.replace(/^\/(de\/)?/, '/');
-const enUrl = new URL(basePath, siteConfig.url);
-const deUrl = new URL(`/de${basePath === '/' ? '/' : basePath}`, siteConfig.url);
+const resolvedEnPath = alternateEnPath || basePath;
+const resolvedDePath = alternateDePath || `/de${basePath === '/' ? '/' : basePath}`;
+const enUrl = new URL(resolvedEnPath, siteConfig.url);
+const deUrl = new URL(resolvedDePath, siteConfig.url);
+const alternateLanguageUrl = lang === 'de' ? resolvedEnPath : resolvedDePath;
 ---
 
 <!doctype html>
@@ -55,7 +60,7 @@ const deUrl = new URL(`/de${basePath === '/' ? '/' : basePath}`, siteConfig.url)
     >
       {t('nav.skipToContent')}
     </a>
-    <Header lang={lang} />
+    <Header lang={lang} alternateLanguageUrl={alternateLanguageUrl} />
     <main id="main-content">
       <slot />
     </main>
