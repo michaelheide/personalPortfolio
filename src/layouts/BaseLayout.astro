@@ -48,15 +48,23 @@ const alternateLanguageUrl = lang === 'de' ? resolvedEnPath : resolvedDePath;
     </script>
     <BaseHead title={title} description={description} lang={lang} />
     <JsonLd lang={lang} />
+    <!-- Fonts: Fraunces (serif display) + JetBrains Mono (UI chrome) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    />
     <!-- hreflang tags for SEO -->
     <link rel="alternate" hreflang="en" href={enUrl} />
     <link rel="alternate" hreflang="de" href={deUrl} />
     <link rel="alternate" hreflang="x-default" href={enUrl} />
   </head>
   <body class="min-h-screen bg-[var(--color-bg-primary)] text-[var(--color-text-body)] antialiased">
+    <div class="scroll-progress" id="scroll-progress"></div>
     <a
       href="#main-content"
-      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-[var(--color-accent-dark)] focus:text-white focus:rounded-lg focus:outline-none"
+      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-[var(--color-text-heading)] focus:text-[var(--color-bg-primary)] focus:outline-none focus:font-mono focus:text-xs"
     >
       {t('nav.skipToContent')}
     </a>
@@ -85,6 +93,18 @@ const alternateLanguageUrl = lang === 'de' ? resolvedEnPath : resolvedDePath;
       document.querySelectorAll('.scroll-reveal').forEach((el) => {
         observer.observe(el);
       });
+
+      // Scroll progress line
+      const progress = document.getElementById('scroll-progress');
+      const updateProgress = () => {
+        const h = document.documentElement;
+        const scrolled = h.scrollTop;
+        const height = h.scrollHeight - h.clientHeight;
+        const pct = height > 0 ? (scrolled / height) * 100 : 0;
+        if (progress) progress.style.width = pct + '%';
+      };
+      window.addEventListener('scroll', updateProgress, { passive: true });
+      updateProgress();
 
       // Smooth scroll for anchor links
       document.querySelectorAll('a[href^="#"]').forEach((anchor) => {

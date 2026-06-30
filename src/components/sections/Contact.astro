@@ -3,7 +3,6 @@ import { defaultLang, type Lang } from '@i18n/ui';
 import { useTranslations } from '@i18n/utils';
 import { getSiteConfig } from '@i18n/translations';
 import SocialLink from '@/components/ui/SocialLink.astro';
-import GradientBlob from '@/components/ui/GradientBlob.astro';
 import SectionHeader from '@/components/ui/SectionHeader.astro';
 
 interface Props {
@@ -15,68 +14,55 @@ const t = useTranslations(lang);
 const siteConfig = getSiteConfig(lang);
 ---
 
-<section id="contact" class="py-20 md:py-32 relative overflow-hidden">
-  <!-- Background Blobs -->
-  <GradientBlob size="lg" position="-bottom-32 -right-32" delay={0} />
-  <GradientBlob size="md" position="top-20 -left-20" delay={2} />
-
+<section id="contact" class="py-24 md:py-32 rule-top relative overflow-hidden">
   <div class="container mx-auto px-6 relative z-10">
-    <div class="max-w-3xl mx-auto">
-      <SectionHeader
-        title={t('contact.title')}
-        description={t('contact.description')}
-      />
+    <SectionHeader
+      title={t('contact.title')}
+      description={t('contact.description')}
+      index="05"
+      kicker="Contact"
+    />
 
-      <!-- Contact Card -->
-      <div class="scroll-reveal stagger-1 card-soft p-8 md:p-12 text-center">
-        <!-- Email -->
-        <div class="mb-8">
-          <p class="text-sm text-[var(--color-text-muted)] uppercase tracking-wider mb-2">
-            {t('contact.emailMe')}
-          </p>
+    <div class="grid md:grid-cols-12 gap-10 md:gap-12 items-start pt-8">
+      <!-- Email block -->
+      <div class="md:col-span-8 scroll-reveal stagger-1">
+        <p class="kicker mb-4">{t('contact.emailMe')}</p>
+        <div class="flex items-center gap-4 flex-wrap">
           <a
             href={`mailto:${siteConfig.email}`}
             id="email-link"
-            class="text-2xl md:text-3xl font-semibold text-[var(--color-text-heading)] hover:text-[var(--color-accent-dark)] transition-colors"
+            class="font-serif text-3xl md:text-5xl lg:text-6xl font-light tracking-tight text-[var(--color-text-heading)] hover:text-[var(--color-accent-medium)] transition-colors break-all leading-[1.05]"
           >
             {siteConfig.email}
           </a>
           <button
             id="copy-email"
             data-email={siteConfig.email}
-            class="ml-3 inline-flex items-center justify-center w-10 h-10 rounded-lg bg-[var(--color-highlight-light)] text-[var(--color-text-body)] hover:text-[var(--color-accent-dark)] hover:bg-[var(--color-highlight-medium)] transition-all"
+            class="inline-flex items-center justify-center w-10 h-10 border border-[var(--color-rule-strong)] text-[var(--color-text-muted)] hover:text-[var(--color-accent-medium)] hover:border-[var(--color-accent-medium)] transition-all"
             aria-label={t('contact.copyEmail')}
           >
-            <svg id="copy-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+            <svg id="copy-icon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
             </svg>
-            <svg id="check-icon" class="w-5 h-5 hidden text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            <svg id="check-icon" class="w-4 h-4 hidden text-[var(--color-accent-medium)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 13l4 4L19 7" />
             </svg>
           </button>
         </div>
+      </div>
 
-        <!-- Divider -->
-        <div class="flex items-center gap-4 mb-8">
-          <div class="flex-1 h-px bg-[var(--color-highlight-medium)]"></div>
-          <span class="text-sm text-[var(--color-text-muted)]">{t('contact.orFindMe')}</span>
-          <div class="flex-1 h-px bg-[var(--color-highlight-medium)]"></div>
-        </div>
-
-        <!-- Social Links -->
-        <div class="flex items-center justify-center gap-4 mb-8">
+      <!-- Meta + socials -->
+      <div class="md:col-span-4 scroll-reveal stagger-2 rule-top pt-8">
+        <p class="kicker mb-5">{t('contact.orFindMe')}</p>
+        <div class="flex flex-wrap gap-3 mb-8">
           {siteConfig.socials.map((social) => (
-            <SocialLink name={social.name} url={social.url} icon={social.icon} size="lg" />
+            <SocialLink name={social.name} url={social.url} icon={social.icon} size="md" />
           ))}
         </div>
 
-        <!-- Location -->
-        <div class="text-[var(--color-text-muted)] text-sm">
-          <svg class="w-4 h-4 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-          </svg>
-          {siteConfig.location} · {siteConfig.timezone}
+        <div class="font-mono text-[0.7rem] uppercase tracking-[0.18em] text-[var(--color-text-muted)] space-y-2">
+          <p>{siteConfig.location}</p>
+          <p>{siteConfig.timezone}</p>
         </div>
       </div>
     </div>

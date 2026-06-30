@@ -2,19 +2,26 @@
 interface Props {
   title: string;
   description?: string;
+  index?: string;
+  kicker?: string;
 }
 
-const { title, description } = Astro.props;
+const { title, description, index = '00', kicker } = Astro.props;
 ---
 
-<div class="text-center mb-16 scroll-reveal">
-  <h2 class="text-3xl md:text-4xl font-bold text-[var(--color-text-heading)] mb-4">
-    {title}
-  </h2>
-  <div class="w-20 h-1 bg-gradient-to-r from-[var(--color-accent-light)] to-[var(--color-accent-dark)] mx-auto rounded-full mb-6"></div>
-  {description && (
-    <p class="text-lg text-[var(--color-text-muted)] max-w-2xl mx-auto">
-      {description}
-    </p>
-  )}
+<div class="mb-14 scroll-reveal rule-bottom pb-6">
+  <div class="flex items-baseline gap-4 mb-3">
+    <span class="section-index">{index}</span>
+    {kicker && <span class="kicker">{kicker}</span>}
+  </div>
+  <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+    <h2 class="font-serif text-3xl md:text-5xl font-light tracking-tight text-[var(--color-text-heading)] leading-[1.05]">
+      {title}
+    </h2>
+    {description && (
+      <p class="font-serif text-base md:text-lg text-[var(--color-text-muted)] max-w-md md:text-right leading-relaxed">
+        {description}
+      </p>
+    )}
+  </div>
 </div>

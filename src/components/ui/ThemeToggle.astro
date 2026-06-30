@@ -3,12 +3,12 @@
 
 <button
   id="theme-toggle"
-  class="p-2 rounded-lg bg-[var(--color-bg-card)] hover:bg-[var(--color-highlight-light)] transition-colors"
+  class="p-2 border border-[var(--color-rule-strong)] text-[var(--color-text-heading)] hover:text-[var(--color-accent-medium)] hover:border-[var(--color-accent-medium)] transition-colors"
   aria-label="Toggle theme"
 >
   <!-- Sun icon (visible in dark mode - click to switch to light) -->
   <svg
-    class="w-5 h-5 text-[var(--color-text-heading)] sun-icon"
+    class="w-4 h-4 sun-icon"
     fill="none"
     stroke="currentColor"
     viewBox="0 0 24 24"
@@ -16,13 +16,13 @@
     <path
       stroke-linecap="round"
       stroke-linejoin="round"
-      stroke-width="2"
+      stroke-width="1.5"
       d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
     />
   </svg>
   <!-- Moon icon (visible in light mode - click to switch to dark) -->
   <svg
-    class="w-5 h-5 text-[var(--color-text-heading)] moon-icon hidden"
+    class="w-4 h-4 moon-icon hidden"
     fill="none"
     stroke="currentColor"
     viewBox="0 0 24 24"
@@ -30,7 +30,7 @@
     <path
       stroke-linecap="round"
       stroke-linejoin="round"
-      stroke-width="2"
+      stroke-width="1.5"
       d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
     />
   </svg>
@@ -53,7 +53,6 @@
       }
     }
 
-    // Initialize icons on load
     updateIcons();
 
     themeToggle?.addEventListener('click', () => {
@@ -66,7 +65,6 @@
         document.documentElement.classList.remove('light');
       }
 
-      // Store validated theme value
       if (newTheme === 'light' || newTheme === 'dark') {
         localStorage.setItem('theme', newTheme);
       }
@@ -75,9 +73,6 @@
     });
   }
 
-  // Run on initial load
   initThemeToggle();
-
-  // Re-run after Astro page transitions
   document.addEventListener('astro:after-swap', initThemeToggle);
 </script>

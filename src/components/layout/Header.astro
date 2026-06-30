@@ -18,114 +18,91 @@ const homeUrl = getHomeUrl(lang);
 const blogUrl = getBlogOverviewUrl(lang);
 
 const navLinks = [
-  { label: t('nav.about'), href: `${homeUrl}#about` },
-  { label: t('nav.skills'), href: `${homeUrl}#skills` },
-  { label: t('nav.projects'), href: `${homeUrl}#projects` },
-  { label: t('nav.blog'), href: blogUrl },
-  { label: t('nav.contact'), href: `${homeUrl}#contact` },
+  { label: t('nav.about'), href: `${homeUrl}#about`, index: '01' },
+  { label: t('nav.skills'), href: `${homeUrl}#skills`, index: '02' },
+  { label: t('nav.projects'), href: `${homeUrl}#projects`, index: '03' },
+  { label: t('nav.blog'), href: blogUrl, index: '04' },
+  { label: t('nav.contact'), href: `${homeUrl}#contact`, index: '05' },
 ];
 ---
 
 <header
   id="header"
-  class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+  class="fixed top-0 left-0 right-0 z-50 bg-[var(--color-bg-primary)]/95 backdrop-blur-md transition-all duration-300"
+  style="border-bottom: 1px solid transparent;"
 >
-  <nav class="container mx-auto px-6 py-4">
-    <div class="glass rounded-2xl px-6 py-3 flex items-center justify-between">
+  <nav class="container mx-auto px-6 py-5">
+    <div class="flex items-center justify-between gap-6">
       <!-- Logo -->
       <a
         href={homeUrl}
-        class="text-xl font-bold text-[var(--color-text-heading)] hover:text-[var(--color-accent-dark)] transition-colors"
+        class="font-serif text-lg font-medium tracking-tight text-[var(--color-text-heading)] hover:text-[var(--color-accent-medium)] transition-colors"
       >
-        {siteConfig.name.split(' ')[0]}<span class="text-[var(--color-accent-medium)]">.</span>
+        {siteConfig.name.split(' ')[1]}<span class="text-[var(--color-accent-medium)]">.</span>
       </a>
 
       <!-- Desktop Navigation -->
-      <ul class="hidden md:flex items-center gap-8">
+      <ul class="hidden md:flex items-center gap-7">
         {
           navLinks.map((link) => (
             <li>
               <a
                 href={link.href}
-                class="text-[var(--color-text-body)] hover:text-[var(--color-accent-dark)] transition-colors font-medium"
+                class="group inline-flex items-baseline gap-1.5 font-mono text-[0.72rem] uppercase tracking-[0.18em] text-[var(--color-text-body)] hover:text-[var(--color-text-heading)] transition-colors"
               >
-                {link.label}
+                <span class="text-[var(--color-text-muted)] group-hover:text-[var(--color-accent-medium)] transition-colors">{link.index}</span>
+                <span>{link.label}</span>
               </a>
             </li>
           ))
         }
       </ul>
 
-      <!-- CTA Button, Language Switcher and Theme Toggle -->
-      <div class="hidden md:flex items-center gap-2">
+      <!-- Right cluster: clock, language, theme -->
+      <div class="hidden md:flex items-center gap-4">
+        <span class="font-mono text-[0.7rem] uppercase tracking-[0.18em] text-[var(--color-text-muted)] hidden lg:inline-flex items-center gap-2">
+          <span class="inline-block w-1.5 h-1.5 rounded-full bg-[var(--color-accent-medium)] animate-pulse"></span>
+          <span id="local-clock">--:--</span>
+          <span class="text-[var(--color-text-muted)]">CET</span>
+        </span>
         <LanguageSwitcher lang={lang} alternateUrl={alternateLanguageUrl} />
         <ThemeToggle />
-        <a
-          href={`${homeUrl}#contact`}
-          class="btn-primary text-sm"
-        >
-          {t('nav.getInTouch')}
-        </a>
       </div>
 
-      <!-- Mobile Menu Button and Theme Toggle -->
+      <!-- Mobile cluster -->
       <div class="md:hidden flex items-center gap-2">
         <LanguageSwitcher lang={lang} alternateUrl={alternateLanguageUrl} />
         <ThemeToggle />
         <button
           id="mobile-menu-btn"
-          class="p-2 text-[var(--color-text-heading)] hover:text-[var(--color-accent-dark)] transition-colors"
+          class="p-2 text-[var(--color-text-heading)] hover:text-[var(--color-accent-medium)] transition-colors"
           aria-label="Toggle menu"
           aria-expanded="false"
         >
-          <svg
-            class="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              class="menu-icon"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M4 6h16M4 12h16M4 18h16"
-            />
-            <path
-              class="close-icon hidden"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M6 18L18 6M6 6l12 12"
-            />
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path class="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 6h18M3 12h18M3 18h18" />
+            <path class="close-icon hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
       </div>
     </div>
 
     <!-- Mobile Menu -->
-    <div
-      id="mobile-menu"
-      class="md:hidden hidden glass rounded-2xl mt-2 p-4"
-    >
-      <ul class="flex flex-col gap-4">
+    <div id="mobile-menu" class="md:hidden hidden mt-2">
+      <ul class="flex flex-col">
         {
           navLinks.map((link) => (
-            <li>
+            <li class="border-b border-[var(--color-rule)]">
               <a
                 href={link.href}
-                class="block py-2 text-[var(--color-text-body)] hover:text-[var(--color-accent-dark)] transition-colors font-medium"
+                class="flex items-baseline gap-3 py-3 font-mono text-xs uppercase tracking-[0.18em] text-[var(--color-text-body)] hover:text-[var(--color-text-heading)] transition-colors"
               >
-                {link.label}
+                <span class="text-[var(--color-accent-medium)]">{link.index}</span>
+                <span>{link.label}</span>
               </a>
             </li>
           ))
         }
-        <li>
-          <a href={`${homeUrl}#contact`} class="btn-primary text-sm w-full justify-center">
-            {t('nav.getInTouch')}
-          </a>
-        </li>
       </ul>
     </div>
   </nav>
@@ -137,7 +114,6 @@ const navLinks = [
   const menuIcon = mobileMenuBtn?.querySelector('.menu-icon');
   const closeIcon = mobileMenuBtn?.querySelector('.close-icon');
 
-  // Mobile menu toggle
   mobileMenuBtn?.addEventListener('click', () => {
     const isOpen = mobileMenu?.classList.toggle('hidden');
     mobileMenuBtn.setAttribute('aria-expanded', String(!isOpen));
@@ -145,7 +121,6 @@ const navLinks = [
     closeIcon?.classList.toggle('hidden');
   });
 
-  // Close mobile menu on link click
   mobileMenu?.querySelectorAll('a').forEach((link) => {
     link.addEventListener('click', () => {
       mobileMenu.classList.add('hidden');
@@ -154,4 +129,34 @@ const navLinks = [
       mobileMenuBtn?.setAttribute('aria-expanded', 'false');
     });
   });
+
+  // Header hairline on scroll
+  const header = document.getElementById('header');
+  const toggleHeader = () => {
+    if (!header) return;
+    header.style.borderBottomColor = window.scrollY > 8
+      ? 'var(--color-rule)'
+      : 'transparent';
+  };
+  window.addEventListener('scroll', toggleHeader, { passive: true });
+  toggleHeader();
+
+  // Live CET clock
+  function updateClock() {
+    const el = document.getElementById('local-clock');
+    if (!el) return;
+    try {
+      const fmt = new Intl.DateTimeFormat('en-GB', {
+        timeZone: 'Europe/Berlin',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false,
+      });
+      el.textContent = fmt.format(new Date());
+    } catch {
+      el.textContent = '';
+    }
+  }
+  updateClock();
+  setInterval(updateClock, 30000);
 </script>

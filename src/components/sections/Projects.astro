@@ -12,32 +12,23 @@ interface Props {
 const { lang = defaultLang } = Astro.props;
 const t = useTranslations(lang);
 const projects = getProjects(lang);
-
-const featuredProject = projects.find((p) => p.featured);
-const otherProjects = projects.filter((p) => !p.featured);
 ---
 
-<section id="projects" class="py-20 md:py-32 bg-gradient-to-b from-[var(--color-bg-soft)] to-[var(--color-bg-primary)]">
+<section id="projects" class="py-24 md:py-32 rule-top">
   <div class="container mx-auto px-6">
-    <div class="max-w-6xl mx-auto">
-      <SectionHeader
-        title={t('projects.title')}
-        description={t('projects.description')}
-      />
+    <SectionHeader
+      title={t('projects.title')}
+      description={t('projects.description')}
+      index="03"
+      kicker="Work"
+    />
 
-      <!-- Projects Grid -->
-      <div class="grid md:grid-cols-2 gap-8">
-        {featuredProject && (
-          <div class="scroll-reveal stagger-1">
-            <ProjectCard project={featuredProject} featured={true} lang={lang} />
-          </div>
-        )}
-        {otherProjects.map((project, index) => (
-          <div class={`scroll-reveal stagger-${(index % 4) + 2}`}>
-            <ProjectCard project={project} lang={lang} />
-          </div>
-        ))}
-      </div>
+    <div class="rule-top">
+      {projects.map((project, index) => (
+        <div class={`scroll-reveal stagger-${(index % 4) + 1}`}>
+          <ProjectCard project={project} featured={project.featured} lang={lang} index={index} />
+        </div>
+      ))}
     </div>
   </div>
 </section>

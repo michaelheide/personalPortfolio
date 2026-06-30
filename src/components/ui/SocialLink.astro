@@ -15,9 +15,9 @@ const sizeClasses = {
 };
 
 const iconSizes = {
-  sm: 'w-4 h-4',
-  md: 'w-5 h-5',
-  lg: 'w-6 h-6',
+  sm: 'w-3.5 h-3.5',
+  md: 'w-4 h-4',
+  lg: 'w-5 h-5',
 };
 
 const icons: Record<string, string> = {
@@ -31,7 +31,7 @@ const icons: Record<string, string> = {
   href={url}
   target="_blank"
   rel="noopener noreferrer"
-  class={`${sizeClasses[size]} flex items-center justify-center rounded-xl bg-[var(--color-bg-card)] text-[var(--color-text-body)] hover:text-[var(--color-accent-dark)] hover:bg-[var(--color-highlight-light)] transition-all duration-300`}
+  class={`${sizeClasses[size]} flex items-center justify-center border border-[var(--color-rule-strong)] text-[var(--color-text-body)] hover:text-[var(--color-accent-medium)] hover:border-[var(--color-accent-medium)] transition-colors`}
   aria-label={`Follow on ${name}`}
 >
   <svg

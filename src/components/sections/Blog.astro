@@ -15,35 +15,35 @@ const posts = await getLatestBlogPosts(lang, 2);
 const blogUrl = getBlogOverviewUrl(lang);
 ---
 
-<section id="blog" class="py-20 md:py-32 bg-[var(--color-bg-primary)]">
+<section id="blog" class="py-24 md:py-32 rule-top">
   <div class="container mx-auto px-6">
-    <div class="max-w-6xl mx-auto">
-      <SectionHeader
-        title={t('blog.title')}
-        description={t('blog.sectionDescription')}
-      />
+    <SectionHeader
+      title={t('blog.title')}
+      description={t('blog.sectionDescription')}
+      index="04"
+      kicker="Journal"
+    />
 
-      {posts.length > 0 ? (
-        <>
-          <div class="grid gap-8 md:grid-cols-2 items-stretch">
-            {posts.map((post, index) => (
-              <div class={`scroll-reveal stagger-${index + 1}`}>
-                <BlogCard post={post} lang={lang} />
-              </div>
-            ))}
-          </div>
-
-          <div class="scroll-reveal stagger-3 mt-10 flex justify-center">
-            <a href={blogUrl} class="btn-secondary">
-              {t('blog.viewAllPosts')}
-            </a>
-          </div>
-        </>
-      ) : (
-        <div class="card-soft scroll-reveal max-w-3xl mx-auto p-8 text-center">
-          <p class="text-lg text-[var(--color-text-muted)]">{t('blog.noPosts')}</p>
+    {posts.length > 0 ? (
+      <>
+        <div class="grid gap-8 md:grid-cols-2 items-stretch">
+          {posts.map((post, index) => (
+            <div class={`scroll-reveal stagger-${index + 1}`}>
+              <BlogCard post={post} lang={lang} />
+            </div>
+          ))}
         </div>
-      )}
-    </div>
+
+        <div class="scroll-reveal stagger-3 mt-12">
+          <a href={blogUrl} class="btn-secondary">
+            {t('blog.viewAllPosts')}
+          </a>
+        </div>
+      </>
+    ) : (
+      <div class="scroll-reveal rule-top pt-8 max-w-3xl">
+        <p class="font-serif text-lg text-[var(--color-text-muted)]">{t('blog.noPosts')}</p>
+      </div>
+    )}
   </div>
 </section>

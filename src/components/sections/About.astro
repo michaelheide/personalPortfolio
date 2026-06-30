@@ -17,78 +17,69 @@ const roleCards = [
   {
     title: t('about.role.architect.title'),
     description: t('about.role.architect.description'),
-    icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />`,
+    index: '01',
   },
   {
     title: t('about.role.developer.title'),
     description: t('about.role.developer.description'),
-    icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />`,
+    index: '02',
   },
   {
     title: t('about.role.lecturer.title'),
     description: t('about.role.lecturer.description'),
-    icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />`,
+    index: '03',
   },
 ];
 ---
 
-<section id="about" class="py-20 md:py-32 bg-gradient-to-b from-[var(--color-bg-primary)] to-[var(--color-bg-soft)]">
+<section id="about" class="py-24 md:py-32 rule-top">
   <div class="container mx-auto px-6">
-    <div class="max-w-6xl mx-auto">
-      <SectionHeader title={t('about.title')} />
+    <SectionHeader title={t('about.title')} index="01" kicker="Profile" />
 
-      <div class="grid md:grid-cols-2 gap-12 items-center">
-        <!-- Photo / Avatar -->
-        <div class="scroll-reveal stagger-1">
-          <div class="relative">
-            <!-- Gradient Border -->
-            <div class="absolute -inset-1 bg-gradient-to-r from-[var(--color-accent-light)] via-[var(--color-accent-medium)] to-[var(--color-accent-dark)] rounded-2xl blur-sm opacity-50"></div>
-            <div class="relative aspect-square rounded-2xl overflow-hidden bg-[var(--color-bg-card)] flex items-center justify-center">
-<Image
-                src={profilImage}
-                alt="Michael Heide"
-                class="w-full h-full object-cover"
-                loading="lazy"
-              />
-            </div>
+    <div class="grid md:grid-cols-12 gap-10 md:gap-12 items-start">
+      <!-- Photo -->
+      <div class="md:col-span-5 scroll-reveal stagger-1">
+        <div class="relative">
+          <div class="relative aspect-[4/5] overflow-hidden border border-[var(--color-rule-strong)]">
+            <Image
+              src={profilImage}
+              alt="Michael Heide"
+              class="w-full h-full object-cover grayscale-[0.15] contrast-[1.02]"
+              loading="lazy"
+            />
           </div>
+          <p class="mt-3 font-mono text-[0.66rem] uppercase tracking-[0.2em] text-[var(--color-text-muted)]">
+            Fig. 01 — {t('about.title')}
+          </p>
+        </div>
+      </div>
+
+      <!-- Bio & roles -->
+      <div class="md:col-span-7 space-y-10">
+        <div class="scroll-reveal stagger-2 space-y-4">
+          <p class="font-serif text-lg md:text-xl leading-relaxed text-[var(--color-text-body)]">
+            {t('about.bio1')}
+          </p>
+          <p class="font-serif text-lg md:text-xl leading-relaxed text-[var(--color-text-body)]">
+            {t('about.bio2')}
+          </p>
         </div>
 
-        <!-- Bio & Role Cards -->
-        <div class="space-y-8">
-          <div class="scroll-reveal stagger-2">
-            <p class="text-lg text-[var(--color-text-body)] leading-relaxed">
-              {t('about.bio1')}
-            </p>
-            <p class="text-lg text-[var(--color-text-body)] leading-relaxed mt-4">
-              {t('about.bio2')}
-            </p>
-          </div>
+        <!-- Role list — editorial index -->
+        <div class="scroll-reveal stagger-3 rule-top">
+          {roleCards.map((role) => (
+            <div class="grid grid-cols-12 gap-4 py-5 border-b border-[var(--color-rule)] items-baseline">
+              <span class="col-span-1 font-mono text-[0.7rem] tracking-[0.18em] text-[var(--color-accent-medium)]">{role.index}</span>
+              <h3 class="col-span-11 md:col-span-4 font-serif text-lg font-medium text-[var(--color-text-heading)]">{role.title}</h3>
+              <p class="col-span-11 col-start-2 md:col-span-7 md:col-start-7 font-serif text-sm text-[var(--color-text-muted)] leading-relaxed">{role.description}</p>
+            </div>
+          ))}
+        </div>
 
-          <!-- Role Cards -->
-          <div class="grid gap-4">
-            {roleCards.map((role, index) => (
-              <div class={`scroll-reveal stagger-${index + 2} card-soft p-4 flex items-start gap-4`}>
-                <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-[var(--color-accent-light)] to-[var(--color-accent-medium)] flex items-center justify-center text-white">
-                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" set:html={role.icon} />
-                </div>
-                <div>
-                  <h3 class="font-semibold text-[var(--color-text-heading)]">{role.title}</h3>
-                  <p class="text-sm text-[var(--color-text-muted)]">{role.description}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <!-- CV Download -->
-          <div class="flex justify-center scroll-reveal stagger-5">
-            <Button href="/Michael-Heide_CV.pdf" download variant="secondary" size="lg">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-              </svg>
-              {t('about.downloadCV')}
-            </Button>
-          </div>
+        <div class="scroll-reveal stagger-5">
+          <Button href="/Michael-Heide_CV.pdf" download variant="secondary" size="lg">
+            {t('about.downloadCV')}
+          </Button>
         </div>
       </div>
     </div>
